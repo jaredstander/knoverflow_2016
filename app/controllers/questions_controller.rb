@@ -1,4 +1,4 @@
-class QuestionsContoller < ApplicationController
+class QuestionsController < ApplicationController
   def index
     @questions = Question.all
   end
@@ -8,7 +8,7 @@ class QuestionsContoller < ApplicationController
   end
 
   def create
-    @question = Question.new(params[:question])
+    @question = Question.new question_params
     @question.user = current_user
     if @question.save
       redirect_to question_path(@question)
@@ -42,13 +42,19 @@ class QuestionsContoller < ApplicationController
 
   def update
     @question = Question.find(params[:id])
-    @question.title = params["question"]["title"]
-    @question.content = params["question"]["content"]
+    @question.title = question_params["title"]
+    @question.content = question_params["content"]
     if @question.save
       redirect_to question_path(@question)
     else
       redirect_to edit_question_path(@question)
       flash[:error] = "Error!"
     end
+  end
+
+  private
+
+  def question_params
+    params.require(:question).permit(:title, :content)
   end
 end
