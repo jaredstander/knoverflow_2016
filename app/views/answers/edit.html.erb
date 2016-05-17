@@ -1,0 +1,9 @@
+<h1>Update Your Answer Here!</h1>
+<%= flash[:error] if flash[:error] %>
+<%= form_for [@answer] do |f| %>
+  <%= f.label :content %>
+  <br />
+  <%= f.text_field :content %>
+  <br />
+  <%= f.submit %>
+<% end %>

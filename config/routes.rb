@@ -12,6 +12,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:new, :create, :edit, :update, :destroy]
     resources :answers, only: [:new, :create, :edit, :update, :destroy] 
   end
+
+  # this likely needs to be removed
+  resources :answers, except: [:new, :create] do
+    resources :comments, only: [:new, :create, :edit, :update, :destroy]
+    resources :votes, only: [:new, :create, :update]
+  end
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
