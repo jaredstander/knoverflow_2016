@@ -1,69 +1,66 @@
 class CommentsController < ApplicationController
 
-  def new 
-    if params.has_key?('question_id')
-      @commentable = Question.find(params[:question_id])
-    elsif params.has_key?('answer_id')
-      @commentable = Answer.find(params[:answer_id])
-    end
-    render json: {
-      html: render_to_string(partial: 'form', locals: { commentable: @commentable, comment: @commentable.comments.build })
-    }
-  end 
-
   def create
     if params.has_key?('question_id')
       question = Question.find(params[:question_id])
-      comment = question.comments.new(params[:comment])
+      comment = question.comments.new comment_params
       comment.user_id = current_user.id
       if comment.save
-        render json: {
-          html: render_to_string(partial: 'comments', locals: {commentable: question})
-        }
+        # render json: {
+        #   html: render_to_string(partial: 'comments', locals: {commentable: question})
+        # }
+        redirect_to question_path(question)
       else
-        render json: {
-          html: render_to_string(partial: 'form', locals: { commentable: question, comment: comment })
-        }, status: :unprocessable_entity
+        # render json: {
+        #   html: render_to_string(partial: 'form', locals: { commentable: question, comment: comment })
+        # }, status: :unprocessable_entity
+        redirect_to question_path(question)
       end
     elsif params.has_key?('answer_id')
       answer = Answer.find(params[:answer_id])
       comment = answer.comments.new (params[:comment])
       comment.user_id = current_user.id
       if comment.save
-        render json: {
-          html: render_to_string(partial: 'comments', locals: { commentable: answer})
-        }
+        # render json: {
+        #   html: render_to_string(partial: 'comments', locals: { commentable: answer})
+        # }
+        redirect_to question_path(answer.question)
       else
-        render json: {
-          html: render_to_string(partial: 'form', locals: { commentable: answer, comment: comment })
-        }, status: :unprocessable_entity
+        # render json: {
+        #   html: render_to_string(partial: 'form', locals: { commentable: answer, comment: comment })
+        # }, status: :unprocessable_entity
+        redirect_to question_path(answer.question)
       end
     end
   end
 
   def destroy
     if params.has_key?("question_id")
-      @comment = Comment.find(params["question_id"])
+      @comment = Comment.find(params["id"])
+      if @comment.user == current_user
+        @comment.destroy
+      end
       @question = Question.find(@comment.commentable_id)
-    else
-      @comment = Comment.find(params["answer_id"])
-      @answer = Answer.find(@comment.commentable_id)
-      @question = @answer.question_id
-    end
-
-    if @comment.user == current_user
-      @comment.destroy
       redirect_to question_path(@question)
+    else
+      @comment = Comment.find(params["id"])
+      if comment.user = current_user
+        @comment.destroy
+      end
+      @answer = Answer.find(@comment.commentable_id)
+      redirect_to question_path(@answer.question)
     end
   end
 
   def edit
     if params.has_key?("question_id")
       @comment = Comment.find(params["id"])
-      @question = Question.find(params["question_id"])
+      @commentable = [Question.find(params["question_id"])]
     else
       @comment = Comment.find(params["id"])
       @answer = Answer.find(params["answer_id"])
+      @question = @answer.question
+      @commentable = [@question, @answer]
     end
   end
 
@@ -90,4 +87,11 @@ class CommentsController < ApplicationController
       end
     end
   end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content)
+  end
+
 end

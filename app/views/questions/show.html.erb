@@ -4,14 +4,21 @@
 <% end %>
 <h1><%= @question.title %></h1>
 <h3><%= @question.content %></h3>
-<%= render partial: '/comments/comments', locals: {commentable: @question } %>
-<br />
-<%= link_to 'create comment', new_question_comment_path(@question), remote: true %>
-<%= link_to 'answer question', new_question_answer_path(@question), remote: true %>
-<span id='create_answer'></span>
-<% if @question.answers.any? %>
-  <h4><%= @question.answers.count %> answers below:</h4>
-  <% @question.answers.all.each do |answer| %>
-    <%= render partial: 'answers/answer', locals: {answer: answer} %>
+<% if @question.comments.any? %>
+  <h4><%= @question.comments.count %> comments:</h4>
+  <% @question.comments.all.each do |comment| %>
+    <%= render partial: 'comments/comment', locals: {comment: comment, commentable: @question} %>
   <% end %>
 <% end %>
+<br />
+<%= render partial: 'comments/form', locals: {commentable: @question} %>
+<br /><br />
+<span id='create_answer'></span>
+<% if @question.answers.any? %>
+  <h4><%= @question.answers.count %> answers:</h4>
+  <% @question.answers.all.each do |answer| %>
+    <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
+  <% end %>
+<% end %>
+<br />
+<%= render partial: 'answers/form', locals: {question: @question} %>

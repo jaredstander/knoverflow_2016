@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   # attr_accessor :name, :email, :password, :password_confirmation
-  has_many :questions
-  has_many :answers
-  has_many :comments
-  has_many :votes
+  has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :votes, dependent: :destroy
   # has_secure_password
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, case_sensitive: false

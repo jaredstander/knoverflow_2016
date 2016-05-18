@@ -2,22 +2,17 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  resources :users, only: [:new, :create]
-
-  resources :questions do
-    resources :votes, only: [:new, :create, :update]
-    resources :comments, only: [:new, :create, :edit, :update, :destroy]
-    resources :answers, only: [:new, :create, :edit, :update, :destroy] 
-  end
-
-  # this likely needs to be removed
-  resources :answers, except: [:new, :create] do
-    resources :comments, only: [:new, :create, :edit, :update, :destroy]
-    resources :votes, only: [:new, :create, :update]
-  end
-
-  resources :users
+  resources :users, only: [:new, :create, :edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
+
+  resources :questions, only: [:new, :create, :show, :edit, :update, :destroy] do
+    resources :answers, only: [:create, :edit, :update, :destroy] do
+      resources :comments, only: [:create, :edit, :update, :destroy]
+      resources :votes, only: [:create, :update]
+    end
+    resources :comments, only: [:new, :create, :edit, :update, :destroy]
+    resources :votes, only: [:new, :create, :update]
+  end
 
   # You can have the root of your site routed with "root"
   # Put root LAST

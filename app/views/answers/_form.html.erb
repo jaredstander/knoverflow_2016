@@ -1,13 +1,8 @@
 <h4>Post an Answer Here!</h4>
-<%= form_for [question, answer],remote: true do |f| %>
+<%= form_for [@question, @answer], remote: true do |f| %>
   <%= f.label :content %>
   <br />
-  <%= f.text_field :content, placeholder: "answer content" %>
+  <%= f.text_field :content, placeholder: "Your Answer" %>
   <br />
-  <%= f.submit %>
-  <% if answer.errors[:content] %>
-    <span class="errors">
-      <%= answer.errors[:content].join(',') %>
-    </span>
-  <% end %>
+  <%= f.submit 'Submit Answer' %>
 <% end %>

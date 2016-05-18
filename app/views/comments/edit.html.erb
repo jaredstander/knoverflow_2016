@@ -1,11 +1,6 @@
 <h4>Edit Your new Comment!</h4>
 <%= flash[:error] if flash[:error] %>
-<% if @question %>
-  <% path_vars = [@question, @comment] %>
-<% else %>
-  <% path_vars = [@answer, @comment] %>
-<% end %>
-<%= form_for(path_vars) do |f| %>
+<%= form_for @commentable.push(@comment) do |f| %>
   <%= f.label :content %>
   <%= f.text_field :content %>
   <%= f.submit 'Submit', class: "btn btn-primary btn-sm" %>

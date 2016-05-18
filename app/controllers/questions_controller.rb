@@ -20,20 +20,14 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
+    @answer = @question.answers.build
+    @comment = Comment.new
   end
 
   def destroy
     @question = Question.find(params[:id])
-    if @question.user == current_user
-      if @question.comments
-        @question.comments.destroy_all
-      end
-      if @question.answers
-        @question.answers.destroy_all
-      end
-      @question.destroy
-      redirect_to root_path
-    end
+    @question.destroy
+    redirect_to root_path
   end
 
   def edit

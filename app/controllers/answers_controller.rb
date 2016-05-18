@@ -1,19 +1,17 @@
 class AnswersController < ApplicationController
 
-  def new
-    question = Question.find(params[:question_id])
-    render json:{html: render_to_string(partial: 'form', locals: {question: question, answer: question.answers.build})}
-  end
-
   def create
-    answer = Answer.new(params[:answer])
-    answer.user_id = current_user.id
-    answer.question_id = params([:question_id])
-    if answer.save
-      render json: {html: render_to_string(partial: 'answer', locals: {answer: answer})}
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.build
+    @answer.user_id = current_user.id
+    @answer.content = answer_params[:content]
+    if @answer.save
+      redirect_to question_path(@question)
+      # render json: {html: render_to_string(partial: 'answer', locals: {answer: @answer})}
     else
-      question = Question.find(answer.question_id)
-      render json: {html: render_to_string(partial: 'form', locals: {question: question, answer: answer})}
+      redirect_to question_path(@question)
+      # question = Question.find(@answer.question_id)
+      # render json: {html: render_to_string(partial: 'question/show', locals: {question: @question, answer: @answer})}
     end
   end
 
@@ -31,17 +29,21 @@ class AnswersController < ApplicationController
 
   def edit
     @answer = Answer.find(params[:id])
+    @question = @answer.question
   end
 
   def update
     @answer = Answer.find(params[:id])
-    @question = Question.find(@answer.question_id)
-    @answer.content = params["answer"]["content"]
+    @answer.content = answer_params[:content]
     if @answer.save
-      redirect_to question_path(@question)
+      redirect_to question_path(@answer.question)
     else
-      redirect_to edit_answer_path(@answer)
+      redirect_to edit_question_answer_path(@answer)
       flash[:error] = "Error!"
     end
+  end
+
+  def answer_params
+    params.require(:answer).permit(:content, :question_id, :user_id)
   end
 end
