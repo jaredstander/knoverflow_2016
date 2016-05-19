@@ -1,41 +1,33 @@
 class VotesController < ApplicationController
-  
-  def new
-    if params.has_key?(question.id)
-      @vote = Vote.new
-      @voteable = Question.find(params[:question_id])
-    elsif params.has_key?(answer.id)
-      @vote = Vote.new
-      @voteable = Answer.find(params[:answer_id])
-    end
-  end
-
   def create
-    # votable class, votable id, votable value
-      if params.has_key?(:up_voted)
-        answer = Answer.find(params[:answer_id])
-        vote = answer.votes.new(up_voted: true)
-        vote.user_id = current_user.id
-      # vote = current_user.votes.where(voteable_id: params[:answer_id]).first_or_initialize(up_voted: params[:up_voted])
-      elsif 
-        answer = Answer.find(params[:answer_id])
-        vote = answer.votes.new(up_voted: false)
-        vote.user_id = current_user.id 
-      end                                                                                # voteable_type: params[:voteable_type],
-                                                                                         # voteable_id: params[:answer_id])
-    if vote.id != current_user.id
-      vote.save
-      render json: 'Your vote has been saved!'.to_json # opportunity to send status back here too for controller testing
+    if params.has_key?(:question_id)
+      @question = Question.find(params[:question_id])
+      vote = @question.votes.new(up_voted: true, voteable_id: @question.id, voteable_type: "question", user_id: current_user.id)
+    elsif params.has_key?(:answer_id)
+      @answer = Answer.find(params[:answer_id])
+      @question = @answer.question
+      vote = @answer.votes.new(up_voted: true, voteable_id: @answer.id, voteable_type: "answer", user_id: current_user.id)
+    end
+    if vote.save
+      format.html { redirect_to @comment.post, notice: 'Comment was successfully created.' }
+      format.js   { }
+      format.json { render :show, status: :created, location: @comment }
     else
-      render json: 'Fuck Off!'.to_json #opportunity to send status back here for controller testing
+      format.html { render :new }
+      format.json { render json: @comment.errors, status: :unprocessable_entity }
     end
   end
 
-  # def update
-  #   if params.has_key?(question.id)
-  #     vote_count = Question.find(params[:question_id]).vote_count
-  #     @vote = Question.find(params[:question_id]).update.vote_count
-  #   elsif 
-  #   end
-  # end
+  def destroy
+    if params.has_key?(:question_id)
+      @question = Question.find(params[:question_id])
+      @vote = @question.votes.where(user_id: current_user.id).first
+      @vote.destroy
+    elsif params.has_key?(:answer_id)
+      @answer = Answer.find(params[:answer_id])
+      @question = @answer.question
+      @vote = @answer.votes.where(user_id: current_user.id).first
+      @vote.destroy
+    end
+  end
 end

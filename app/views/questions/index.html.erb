@@ -16,28 +16,33 @@
         <!-- <p>Most Recent | Highest&nbsp;Voted | Something Else</p> -->
         <!-- <i class="icon icon-share"></i> -->
 
-  <!--     <div class="page-header page-header-1 page-header-2 page-header-7"> -->
 <% unless @questions.nil? %>
   <% @questions.each do |question| %>
+    
     <h1><a><%= link_to question.title, question_path(question) %></a></h1>
-    <h6><% if question.user == current_user %>
+    <h6><% if current_user && question.user == current_user %>
       <%= link_to "delete", question_path(question), {method: :delete}%> <%= link_to "edit", edit_question_path(question), {method: :get} %>
-    <% end %><small></small></h6>
-<!--       </div> -->
-<!--       <div class="page-header page-header-1 page-header-2 page-header-8"> -->
-    <h6>posted by <%= question.user.name %><small></small></h6>
+    <% end %></h6>
+
+    <% if is_logged_in %>
+      <% if has_voted_on(question) %>
+        <%= button_to "Cancel Vote", question_vote_path(question, get_vote(question)), {method: :delete, remote: true, form: { "data-type" => "json" }} %>
+      <% else %>
+        <%= button_to "Upvote", question_votes_path(question), remote: true, form: { "data-type" => "json" } %>
+      <% end %>
+    <% end %>
+
+    <% if question.votes.any? %>
+      <%= question.votes.count %>
+    <% end %>
+
+    <h6>posted by <%= question.user.name %></h6>
     <h3><%= question.content %><h3>
-<!--       </div> -->
-<!--     <div class="dom-body-text paragraph paragraph-1 paragraph-9"> -->
     <% if question.answers.any? %>
       <% highest_voted = question.answers.order("vote_count DESC limit 1") %>
-      <h3> <%= highest_voted[0].content %> <small></small></h3>
-      <h6> posted by <%= highest_voted[0].user.name %><small></small> </h6>
+      <h3> <%= highest_voted[0].content %></h3>
+      <h6> posted by <%= highest_voted[0].user.name %></h6>
     <% end %>
-      <!-- <br> -->
-      <!-- <br> -->
-  <!--    </div> -->
+
   <% end %>
 <% end %>
-
-    <!-- </div> -->
