@@ -5,13 +5,15 @@
   |&nbsp;<%= link_to "Delete Answer", question_answer_path(@question, answer), data: {confirm: "Are you sure?", :method => :delete} %>
 <% end %>
 </div>
-<!-- <% if answer.comments.any? %>
-  <h4><%= answer.comments.count %> comments:</h4>
-  <% @question.comments.all.each do |comment| %>
-    <%= render partial: 'comments/comment', locals: {comment: comment, commentable: answer} %>
+<div id="answer-comment-box">
+  <% if answer.comments.any? %>
+    <h4><%= answer.comments.count %> comments:</h4>
+    <% @question.comments.all.each do |comment| %>
+      <%= render partial: 'comments/comment', locals: {comment: comment, commentable: answer} %>
+    <% end %>
   <% end %>
-<% end %> -->
+</div>
 
-<!-- <% if is_logged_in %>
-  <%= render partial: 'comments/form', locals: {commentable: [@question, answer]} %>
-<% end %> -->
+<% if is_logged_in %>
+  <%= render partial: 'comments/form', locals: {commentable: answer} %>
+<% end %>

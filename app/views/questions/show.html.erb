@@ -25,13 +25,14 @@
   <div id="question-comment-box">
     <% unless @question_comments == nil %>
       <% @question_comments.each do |comment| %>
-        <%= render partial: 'comments/comment', locals: {comment: comment, commentable: @question} %>
+        <%= render partial: 'comments/comment', locals: {comment: comment} %>
       <% end %>
     <% end %>
   </div>
-<!--   <% if is_logged_in %>
-    <%= render partial: 'comments/form', locals: {commentable: [@question]} %>
-  <% end %> -->
+
+  <% if is_logged_in %>
+    <%= render partial: 'comments/form', locals: {commentable: @question} %>
+  <% end %>
 
 
   <div id="answer-box">
