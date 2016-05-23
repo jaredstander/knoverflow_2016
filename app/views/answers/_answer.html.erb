@@ -1,9 +1,10 @@
-<%= answer.user.name %> : "<%= answer.content %>"
+<div class="answer">
+<%= answer.user.name %> answered, <%= answer.content %>
 <% if answer.user == current_user %>
-  &nbsp;<%= link_to "Edit", [:edit, @question, answer] %>
-  |&nbsp;<%= link_to "Delete", question_answer_path(@question, answer), data: {confirm: "Are you sure?", :method => :delete} %>
+  &nbsp;<%= link_to "Edit Answer", [:edit, @question, answer] %>
+  |&nbsp;<%= link_to "Delete Answer", question_answer_path(@question, answer), data: {confirm: "Are you sure?", :method => :delete} %>
 <% end %>
-<br />
+</div>
 <!-- <% if answer.comments.any? %>
   <h4><%= answer.comments.count %> comments:</h4>
   <% @question.comments.all.each do |comment| %>

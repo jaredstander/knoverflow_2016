@@ -1,6 +1,6 @@
 <div id="login-form">
   <h1>Sign In!</h1>
-  <%= flash[:alert] if flash[:alert] %>
+  <div class="error"><%= flash[:error] if flash[:error] %></div>
   <br /><br />
   <%= form_for :session, url: sessions_path do |f| %>
     <%= f.label :email %>

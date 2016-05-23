@@ -20,7 +20,7 @@
 <% unless @questions.nil? %>
   <% @questions.each do |question| %>
     
-    <h2><%= question.user.name %>: <a><%= link_to question.title, question_path(question) %></a> <% if question.answers.any? %>[<%= question.answers.count %> Answers]<% end %></h2>
+    <h2><%= question.user.name %> asks, <a><%= link_to question.title, question_path(question) %></a> <% if question.answers.any? %>[<%= question.answers.count %> Answers]<% else %>| Be the first to answer!<% end %></h2>
 
 <!--     <% if is_logged_in %>
       <% if has_voted_on(question) %>

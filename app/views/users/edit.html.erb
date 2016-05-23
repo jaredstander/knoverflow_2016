@@ -1,6 +1,6 @@
-<div id="edit-form">
+<div class="edit-form">
   <h1>Modify Your Account:</h1>
-  <%= flash[:error] if flash[:error] %>
+  <div class="error"><%= flash[:error] if flash[:error] %></div>
   <br /><br />
   <%= form_for @user do |f| %>
     <%= f.label :name %>

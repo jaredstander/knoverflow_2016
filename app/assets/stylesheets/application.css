@@ -19,11 +19,15 @@ body {font-family:sans-serif; margin:0; padding:0;}
 a {color:#00F; text-decoration:none; font-weight:bold;}
 #home-button {float:left;}
 #user-links {float:right;}
-#index, .edit-form, #signup-form, #login-form, #new-question-form, #new-answer-form, #new-comment-form {margin-left:2%;}
-.question {background-color:#eee; margin-left:2%; padding:2%; width:92%; border:thin solid #000; border-width:0 0 0 1px;}
-.answers {background-color:#ddd; margin-left:2%; padding:2%; border:thin solid #000; border-width:0 0 0 1px;}
+#index, .edit-form {margin-left:2%;}
+.question {background-color:#eee; margin-left:2%; padding:2%; width:92%; border-radius:32px; box-shadow: 5px 5px 5px #888;}
+.answer {background-color:#ddd; margin-left:4%; margin-top:2%; padding:2%; width:88%; border-radius:32px; box-shadow: 5px 5px 5px #888;}
+.comment {background-color:#ccc; margin-left:6%; margin-top:2%; padding:2%; width:86%; border-radius:32px; box-shadow: 5px 5px 5px #888;}
+/*.question {background-color:#eee; margin-left:2%; padding:2%; width:92%; border:thin solid #000; border-width:0 0 0 1px;}*/
+/*.answers {background-color:#ddd; margin-left:2%; padding:2%; border:thin solid #000; border-width:0 0 0 1px;}*/
 #comment-box {margin-left:2%;}
 .question-title {font-weight:bold;}
 .pipe {color:#000;}
 .author-action {font-weight:normal;}
-#answer-count {margin-top:0;}
+.first-heading {margin-top:0;}
+.error {color:red; font-weight:bold;}

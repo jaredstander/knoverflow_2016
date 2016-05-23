@@ -13,14 +13,18 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to question_path(@question)
     else
-      flash[:error] = "Error!"
+      flash[:error] = @question.errors.messages
+      puts @question.errors.messages
       render 'new'
     end
   end
 
   def show
     @question = Question.find(params[:id])
+    @answers = @question.answers.all
     @answer = @question.answers.build
+    @question_comments = @question.comments.all
+    @answer_comments = @answer.comments.all
     @comment = Comment.new
   end
 
@@ -45,7 +49,7 @@ class QuestionsController < ApplicationController
       redirect_to question_path(@question)
     else
       redirect_to edit_question_path(@question)
-      flash[:error] = "Error!"
+      flash[:error] = @question.errors.messages
     end
   end
 

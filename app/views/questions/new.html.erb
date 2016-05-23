@@ -1,7 +1,7 @@
-<div id="new-question-form">
-  <h1>Post a Question Here!</h1>
+<div class="edit-form">
+  <h1>Post a Question</h1>
   <% if current_user %>
-    <%= flash[:error] if flash[:error] %>
+    <div class="error"><%= flash[:error] if flash[:error] %></div>
     <%= form_for @question do |f| %>
       <%= f.label :title %>
       <br />

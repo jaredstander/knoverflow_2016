@@ -1,6 +1,6 @@
 <div class="edit-form">
-  <h1>Update Your Answer:</h1>
-  <%= flash[:error] if flash[:error] %>
+  <h1>Update Your Answer</h1>
+  <div class="error"><%= flash[:error] if flash[:error] %></div>
   <%= form_for [@question, @answer] do |f| %>
     <%= f.label :content %>
     <br />

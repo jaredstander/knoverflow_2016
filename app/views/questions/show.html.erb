@@ -1,6 +1,6 @@
 <br/><br/>
 <div class="question">
-  <div class="question-title"><%= @question.user.name %> asks : <%= @question.title %>
+  <div class="question-title"><%= @question.user.name %> asked, <%= @question.title %>
     <span class="author-action">
     <% if @question.user == current_user %>
       &nbsp;<%= link_to "Edit Question", edit_question_path(@question.id), {method: :get} %>
@@ -23,30 +23,23 @@
   <% end %> -->
 
   <div id="question-comment-box">
-    <% if @question.comments.any? %>
-      <% @question.comments.all.each do |comment| %>
-        <div class="comment">
-          <%= render partial: 'comments/comment', locals: {comment: comment, commentable: @question} %>
-        </div>
+    <% unless @question_comments == nil %>
+      <% @question_comments.each do |comment| %>
+        <%= render partial: 'comments/comment', locals: {comment: comment, commentable: @question} %>
       <% end %>
     <% end %>
   </div>
-  
 <!--   <% if is_logged_in %>
     <%= render partial: 'comments/form', locals: {commentable: [@question]} %>
   <% end %> -->
 
 
-  <br/><br />
-
-  <div class="answers">
-    <div id="answer-box">
-      <% if @question.answers.any? %>
-        <% @question.answers.all.each do |answer| %>
-          <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
-        <% end %>
+  <div id="answer-box">
+    <% unless @answers == nil %>
+      <% @answers.each do |answer| %>
+        <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
       <% end %>
-    </div>
+    <% end %>
 
     <% if is_logged_in && !has_answered(@question) %>
       <%= render partial: 'answers/form', locals: {question: @question} %>

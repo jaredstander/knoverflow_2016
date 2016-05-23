@@ -1,6 +1,6 @@
 <div id="signup-form">
   <h1>Sign Up!</h1>
-  <%= flash[:error] if flash[:error] %>
+  <div class="error"><%= flash[:error] if flash[:error] %></div>
   <br /><br />
   <%= form_for @user do |f| %>
     <%= f.label :name %>
