@@ -12,6 +12,15 @@ module ApplicationHelper
     User.find_by_id(session[:user_id])
   end
 
+  def has_answered(question)
+    @result = question.answers.where(user_id: current_user.id)
+    if(@result.any?)
+      true
+    else
+      false
+    end
+  end
+
   def has_voted_on(item)
     @result = item.votes.where(user_id: current_user.id)
     if(@result.any?)

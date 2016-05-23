@@ -8,18 +8,25 @@
 </head>
 <body>
 
-  <div class="navbar">
-    <ul class="nav navbar-nav">
-      <li id='brand'><%= link_to "knoverflow", root_path %></li>
+  <div id="navigation">
+      <div id='home-button'><%= link_to "knoverflow", root_path %></div>
       <% if session[:user_id] %>
-        <li id='nav_user'><a>Hello <%= User.find(session[:user_id]).name %>!</a></li>
-        <li><%= link_to "ask a question", new_question_path %></li>
-        <li id='log_out'><%= link_to "log out", session_path(current_user), {method: :delete} %></li>
+        <div id="user-links">
+          Hello <%= User.find(session[:user_id]).name %>!</a>
+          &nbsp;&nbsp;<span class="pipe">|<span>&nbsp;&nbsp;
+          <%= link_to "Ask a Question", new_question_path %>
+          &nbsp;&nbsp;<span class="pipe">|<span>&nbsp;&nbsp;
+          <%= link_to "Modify Account", edit_user_path(current_user) %>
+          &nbsp;&nbsp;<span class="pipe">|<span>&nbsp;&nbsp;
+          <%= link_to "Log Out", session_path(current_user), {method: :delete} %>
+        </div>
       <% else %>
-        <li id='sign_up'><%= link_to "sign up", new_user_path %>
-        <li id='sign_in'><%= link_to "sign in", new_session_path %>
+        <div id="user-links">
+          <%= link_to "sign up", new_user_path %>
+          &nbsp;&nbsp;<span class="pipe">|</span>&nbsp;&nbsp;
+          <%= link_to "sign in", new_session_path %>
+        </div>
       <% end %>
-    </ul>
   </div>
 
   <%= yield %>

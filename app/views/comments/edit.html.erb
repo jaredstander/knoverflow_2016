@@ -1,7 +1,10 @@
-<h4>Edit Your new Comment!</h4>
-<%= flash[:error] if flash[:error] %>
-<%= form_for @commentable.push(@comment) do |f| %>
-  <%= f.label :content %>
-  <%= f.text_field :content %>
-  <%= f.submit 'Submit', class: "btn btn-primary btn-sm" %>
-<% end %>
+<div class="edit-form">
+  <h4>Edit Your new Comment!</h4>
+  <%= flash[:error] if flash[:error] %>
+  <br /><br />
+  <%= form_for @comment do |f| %>
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+    <%= f.submit 'Submit', class: "btn btn-primary btn-sm" %>
+  <% end %>
+</div>

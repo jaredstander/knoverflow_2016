@@ -1,5 +1,5 @@
-<div id="signup-form">
-  <h1>Sign Up!</h1>
+<div id="edit-form">
+  <h1>Modify Your Account:</h1>
   <%= flash[:error] if flash[:error] %>
   <br /><br />
   <%= form_for @user do |f| %>
@@ -19,6 +19,7 @@
     <br />
     <%= f.text_field :password_confirmation %>
     <br /><br />
-    <%= f.submit "Sign Up" %>
+    <%= f.submit "Update Account" %>
   <% end %>
+  <p id="delete-account"><%= link_to "DELETE ACCOUNT", user_path(current_user), {method: :delete, :confirm => "Are you sure? This cannot be undone. All questions, answers, and comments will be lost."} %></p>
 </div>

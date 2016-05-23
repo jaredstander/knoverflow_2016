@@ -1,13 +1,16 @@
-<h5><%= answer.content %></h5>
-<h6>posted by <%= answer.user.name %></h6>
+<%= answer.user.name %> : "<%= answer.content %>"
 <% if answer.user == current_user %>
-  <%= link_to "Delete", question_answer_path(@question, answer), :confirm => "Are you sure?", :method => :delete %>
-  <%= link_to "Edit", [:edit, @question, answer] %>
+  &nbsp;<%= link_to "Edit", [:edit, @question, answer] %>
+  |&nbsp;<%= link_to "Delete", question_answer_path(@question, answer), data: {confirm: "Are you sure?", :method => :delete} %>
 <% end %>
 <br />
-<% if answer.comments.any? %>
+<!-- <% if answer.comments.any? %>
   <h4><%= answer.comments.count %> comments:</h4>
   <% @question.comments.all.each do |comment| %>
     <%= render partial: 'comments/comment', locals: {comment: comment, commentable: answer} %>
   <% end %>
-<% end %>
+<% end %> -->
+
+<!-- <% if is_logged_in %>
+  <%= render partial: 'comments/form', locals: {commentable: [@question, answer]} %>
+<% end %> -->

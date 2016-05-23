@@ -2,16 +2,17 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    @answer = @question.answers.build
-    @answer.user_id = current_user.id
-    @answer.content = answer_params[:content]
-    if @answer.save
-      redirect_to question_path(@question)
-      # render json: {html: render_to_string(partial: 'answer', locals: {answer: @answer})}
-    else
-      redirect_to question_path(@question)
-      # question = Question.find(@answer.question_id)
-      # render json: {html: render_to_string(partial: 'question/show', locals: {question: @question, answer: @answer})}
+    @answer = @question.answers.create answer_params
+    @answer.user = current_user
+    respond_to do |format|
+      if @answer.save
+        format.html { redirect_to @answer, notice: 'Answer Posted.' }
+        format.js
+        format.json { render json: @answer, status: :created, location: @answer }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @answer.errors, status: :unprocessable_entity }
+      end
     end
   end
 

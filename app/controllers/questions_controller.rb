@@ -26,16 +26,19 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
+    redirect_to root_path unless User.find(@question.user_id) == current_user
     @question.destroy
     redirect_to root_path
   end
 
   def edit
     @question = Question.find(params[:id])
+    redirect_to root_path unless User.find(@question.user_id) == current_user
   end
 
   def update
     @question = Question.find(params[:id])
+    redirect_to root_path unless User.find(@question.user_id) == current_user
     @question.title = question_params["title"]
     @question.content = question_params["content"]
     if @question.save

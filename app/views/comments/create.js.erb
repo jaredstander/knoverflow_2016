@@ -1,0 +1,1 @@
+$("#<%= escape_javascript(@comment.commentable_type.downcase) %>-comment-box").append("<%= escape_javascript(render @comment) %>");

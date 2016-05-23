@@ -1,44 +1,56 @@
-<% if @question.user == current_user %>
-  <%= button_to "delete", question_path(@question), {method: :delete} %>
-  <%= button_to "edit", edit_question_path(@question.id), {method: :get} %>
-<% end %>
-<h1><%= @question.title %></h1>
-<h3><%= @question.content %></h3>
+<br/><br/>
+<div class="question">
+  <div class="question-title"><%= @question.user.name %> asks : <%= @question.title %>
+    <span class="author-action">
+    <% if @question.user == current_user %>
+      &nbsp;<%= link_to "Edit Question", edit_question_path(@question.id), {method: :get} %>
+      |&nbsp;<%= link_to "Delete Question", question_path(@question), {method: :delete, data: { confirm: 'Are you sure?' }} %>
+    <% end %>
+    </span>
+  </div>
+  <div class="question-content"><%= @question.content %></div>
 
-<% if is_logged_in %>
-  <% if has_voted_on(@question) %>
-    <%= button_to "Cancel Vote", question_vote_path(@question, get_vote(@question)), {method: :delete}, remote: true, form: { "data-type" => "json" } %>
-  <% else %>
-    <%= button_to "Upvote", question_votes_path(@question), remote: true, form: { "data-type" => "json" } %>
+<!--   <% if is_logged_in %>
+    <% if has_voted_on(@question) %>
+      <%= button_to "Cancel Vote", question_vote_path(@question, get_vote(@question)), {method: :delete}, form: { "data-type" => "json" } %>
+    <% else %>
+      <%= button_to "Upvote", question_votes_path(@question), form: { "data-type" => "json" } %>
+    <% end %>
   <% end %>
-<% end %>
 
-<% if @question.votes.any? %>
-  <%= @question.votes.count %>
-<% end %>
+  <% if @question.votes.any? %>
+    <%= @question.votes.count %>
+  <% end %> -->
 
-<% if @question.comments.any? %>
-  <h4><%= @question.comments.count %> comments:</h4>
-  <% @question.comments.all.each do |comment| %>
-    <%= render partial: 'comments/comment', locals: {comment: comment, commentable: @question} %>
-  <% end %>
-<% end %>
-<br />
+  <div id="question-comment-box">
+    <% if @question.comments.any? %>
+      <% @question.comments.all.each do |comment| %>
+        <div class="comment">
+          <%= render partial: 'comments/comment', locals: {comment: comment, commentable: @question} %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  
+<!--   <% if is_logged_in %>
+    <%= render partial: 'comments/form', locals: {commentable: [@question]} %>
+  <% end %> -->
 
-<% if is_logged_in %>
-  <%= render partial: 'comments/form', locals: {commentable: @question} %>
-<% end %>
 
-<br /><br />
-<span id='create_answer'></span>
-<% if @question.answers.any? %>
-  <h4><%= @question.answers.count %> answers:</h4>
-  <% @question.answers.all.each do |answer| %>
-    <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
-  <% end %>
-<% end %>
-<br />
+  <br/><br />
 
-<% if is_logged_in %>
-  <%= render partial: 'answers/form', locals: {question: @question} %>
-<% end %>
+  <div class="answers">
+    <div id="answer-box">
+      <% if @question.answers.any? %>
+        <% @question.answers.all.each do |answer| %>
+          <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if is_logged_in && !has_answered(@question) %>
+      <%= render partial: 'answers/form', locals: {question: @question} %>
+    <% end %>
+  </div>
+
+</div>

@@ -1,97 +1,72 @@
 class CommentsController < ApplicationController
 
   def create
-    if params.has_key?('question_id')
-      question = Question.find(params[:question_id])
-      comment = question.comments.new comment_params
-      comment.user_id = current_user.id
-      if comment.save
-        # render json: {
-        #   html: render_to_string(partial: 'comments', locals: {commentable: question})
-        # }
-        redirect_to question_path(question)
-      else
-        # render json: {
-        #   html: render_to_string(partial: 'form', locals: { commentable: question, comment: comment })
-        # }, status: :unprocessable_entity
-        redirect_to question_path(question)
-      end
-    elsif params.has_key?('answer_id')
+    puts params
+    # @comment = @movie.comments.create(:text => "This is a comment")
+    if comment_params.has_key?(:answer_id)
       answer = Answer.find(params[:answer_id])
-      comment = answer.comments.new (params[:comment])
-      comment.user_id = current_user.id
-      if comment.save
-        # render json: {
-        #   html: render_to_string(partial: 'comments', locals: { commentable: answer})
-        # }
-        redirect_to question_path(answer.question)
-      else
-        # render json: {
-        #   html: render_to_string(partial: 'form', locals: { commentable: answer, comment: comment })
-        # }, status: :unprocessable_entity
-        redirect_to question_path(answer.question)
+      @comment = answer.comments.new (params[:comment])
+      @comment.user_id = current_user.id
+      @comment.commentable_type = "Answer"
+      respond_to do |format|
+        if @comment.save
+          format.html { redirect_to @comment, notice: 'Comment Posted.' }
+          format.js
+          format.json { render json: @comment, status: :created, location: @comment }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      question = Question.find(params[:question_id])
+      @comment = question.comments.new comment_params
+      @comment.user_id = current_user.id
+      respond_to do |format|
+        if @comment.save
+          format.html { redirect_to @comment, notice: 'Comment Posted.' }
+          format.js
+          format.json { render json: @comment, status: :created, location: @comment }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   def destroy
-    if params.has_key?("question_id")
-      @comment = Comment.find(params["id"])
-      if @comment.user == current_user
-        @comment.destroy
-      end
+    @comment = Comment.find(params["id"])
+    redirect_to root_path unless @comment.user_id == current_user.id
+    if @comment.commentable_type == "Question"
       @question = Question.find(@comment.commentable_id)
-      redirect_to question_path(@question)
     else
-      @comment = Comment.find(params["id"])
-      if comment.user = current_user
-        @comment.destroy
-      end
-      @answer = Answer.find(@comment.commentable_id)
-      redirect_to question_path(@answer.question)
+      @question = Answer.find(@comment.commentable_id).question
     end
+    @comment.destroy
+    redirect_to question_path(@question)
   end
 
   def edit
-    if params.has_key?("question_id")
-      @comment = Comment.find(params["id"])
-      @commentable = [Question.find(params["question_id"])]
-    else
-      @comment = Comment.find(params["id"])
-      @answer = Answer.find(params["answer_id"])
-      @question = @answer.question
-      @commentable = [@question, @answer]
-    end
+    @comment = Comment.find(params["id"])
   end
 
   def update
-    if params.has_key?("question_id")
-      @comment = Comment.find(params["id"])
-      @question = Question.find(params["question_id"])
-    else
-      @comment = Comment.find(params["id"])
-      @answer = Answer.find(params["answer_id"])
-      @question = @answer.question_id
-    end
-
-    @comment.content = params["comment"]["content"]
+    @comment.content = params[:content]
+    redirect_to root_path unless @comment.user_id == current_user.id
 
     if @comment.save
       redirect_to question_path(@question)
     else
       flash[:error] = "Error!"
-      if params.has_key?("question_id")
-        redirect_to edit_question_comment_path(@question, @comment)
-      else
-        redirect_to edit_answer_comment_path(@answer, @comment)
-      end
+      render 'edit'
     end
   end
 
   private
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content, :answer_id, :question_id)
   end
 
 end

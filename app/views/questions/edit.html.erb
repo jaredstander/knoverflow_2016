@@ -1,13 +1,16 @@
-<h1>Edit Your Question:</h1>
-<%= flash[:error] if flash[:error] %>
-<%= form_for @question do |f| %>
-  <%= f.label :title %>
-  <br />
-  <%= f.text_field :title %>
+<div class="edit-form">
+  <h1>Edit Your Question:</h1>
+  <%= flash[:error] if flash[:error] %>
   <br /><br />
-  <%= f.label :content %>
-  <br />
-  <%= f.text_field :content %>
-  <br /><br />
-  <%= f.submit %>
-<% end %>
+  <%= form_for @question do |f| %>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title %>
+    <br /><br />
+    <%= f.label :content %>
+    <br />
+    <%= f.text_field :content %>
+    <br /><br />
+    <%= f.submit %>
+  <% end %>
+</div>
