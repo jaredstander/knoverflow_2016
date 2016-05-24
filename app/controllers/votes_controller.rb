@@ -1,33 +1,33 @@
 class VotesController < ApplicationController
   def create
-    if params.has_key?(:question_id)
-      @question = Question.find(params[:question_id])
-      vote = @question.votes.new(up_voted: true, voteable_id: @question.id, voteable_type: "question", user_id: current_user.id)
-    elsif params.has_key?(:answer_id)
-      @answer = Answer.find(params[:answer_id])
-      @question = @answer.question
-      vote = @answer.votes.new(up_voted: true, voteable_id: @answer.id, voteable_type: "answer", user_id: current_user.id)
+    @commentable = find_commentable
+    @vote = @commentable.votes.build
+    @vote.user = current_user
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to @comment, notice: 'Comment Posted.' }
+        format.js
+        format.json { render json: @comment, status: :created, location: @comment }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
     end
-    if vote.save
-      format.html { redirect_to @comment.post, notice: 'Comment was successfully created.' }
-      format.js   { }
-      format.json { render :show, status: :created, location: @comment }
-    else
-      format.html { render :new }
-      format.json { render json: @comment.errors, status: :unprocessable_entity }
-    end
-  end
 
   def destroy
-    if params.has_key?(:question_id)
-      @question = Question.find(params[:question_id])
-      @vote = @question.votes.where(user_id: current_user.id).first
-      @vote.destroy
-    elsif params.has_key?(:answer_id)
-      @answer = Answer.find(params[:answer_id])
-      @question = @answer.question
-      @vote = @answer.votes.where(user_id: current_user.id).first
-      @vote.destroy
+    @vote = Vote.find(params["id"])
+    redirect_to root_path unless @vote.user_id == current_user.id
+    @comment.destroy
+  end
+
+  private
+
+  def find_commentable
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
     end
+    nil
   end
 end

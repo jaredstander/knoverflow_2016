@@ -6,4 +6,8 @@ class Question < ActiveRecord::Base
   validates :title, presence: true, allow_nil: false
   validates :content, presence: true, allow_nil: false
   validates :user, presence: true
+
+  def sort_by_vote
+    #
+  end
 end
