@@ -8,4 +8,10 @@ class Vote < ActiveRecord::Base
   validates :user_id, uniqueness: { scope: :voteable_id }
 
   after_save :update_vote_count
+
+  def update_vote_count
+    @voted_item = self.voteable
+    @voted_item.vote_count = @voted_item.votes.count
+    @voted_item.save
+  end
 end

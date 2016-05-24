@@ -7,6 +7,6 @@ class Answer < ActiveRecord::Base
   validates :user_id, uniqueness: { scope: :question_id }
 
   def sort_by_votes
-    #
+    # select('posts.*, count(votes.id) as vote_count').joins('LEFT OUTER JOIN votes on votes.answer_id = posts.id').group_by('posts.id').order('votes_count desc')
   end
 end

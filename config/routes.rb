@@ -5,16 +5,17 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
   resources :comments, only: [:edit, :update, :destroy]
+  resources :votes, only: [:destroy]
 
   resources :questions, only: [:new, :create, :show, :edit, :update, :destroy] do
     resources :answers, only: [:create, :edit, :update, :destroy]
     resources :comments, only: [:create]
-    resources :votes, only: [:create, :destroy]
+    resources :votes, only: [:create]
   end
 
   resources :answers do
     resources :comments, only: [:create]
-    resources :votes, only: [:create, :destroy]
+    resources :votes, only: [:create]
   end
 
   # You can have the root of your site routed with "root"
