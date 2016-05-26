@@ -1,1 +1,3 @@
-$("#question-votes").html("<%= escape_javascript(@vote_count) %> Votes");
+var voteNumber = parseInt($("#question-votes").html());
+$("#question-votes").html(voteNumber - 1);
+$("#question-vote-button").html('<%= escape_javascript render(partial: "votes/upvote", :locals => { voteable: @voteable }) %>');

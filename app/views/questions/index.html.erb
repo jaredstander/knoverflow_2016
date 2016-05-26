@@ -1,45 +1,8 @@
-    <!-- <div id="absolute-wrapper"> -->
-<!--       <div class="dom-paragraph">
-      </div>
-      <div class="container-fluid">
-        <div class="container container-1">
-          <div class="row-fluid">
-            <span class="span12">
-              <p>knowing is three-fourths of&nbsp;the battle.</p>
-              <h1 class="heading">featured question</h1>
-              <button class="btn btn-primary btn-large">Submit an answer</button>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="container container-2">
-        <!-- <p>Most Recent | Highest&nbsp;Voted | Something Else</p> -->
-        <!-- <i class="icon icon-share"></i> -->
-
 <div id="index">
 <% unless @questions.nil? %>
   <% @questions.each do |question| %>
     
     <h2><%= question.user.name %> asks, <a><%= link_to question.title, question_path(question) %></a> <% if question.answers.any? %>[<%= question.answers.count %> Answers]<% else %>| Be the first to answer!<% end %></h2>
-
-<!--     <% if is_logged_in %>
-      <% if has_voted_on(question) %>
-        <%= button_to "Cancel Vote", question_vote_path(question, get_vote(question)), {method: :delete, remote: true, form: { "data-type" => "json" }} %>
-      <% else %>
-        <%= button_to "Upvote", question_votes_path(question), remote: true, form: { "data-type" => "json" } %>
-      <% end %>
-    <% end %>
-
-    <% if question.votes.any? %>
-      <%= question.votes.count %>
-    <% end %> -->
-
-<!--     <h3><%= question.content %><h3>
-    <% if question.answers.any? %>
-      <% highest_voted = question.answers.order("vote_count DESC limit 1") %>
-      <h3> <%= highest_voted[0].content %></h3>
-      <h6> posted by <%= highest_voted[0].user.name %></h6>
-    <% end %> -->
 
   <% end %>
 <% end %>
