@@ -15,19 +15,20 @@
  */
 
 body {font-family:sans-serif; margin:0; padding:0;}
-#navigation {display:inline-block; width:98%; background-color:#eee; box-shadow: 0px 5px 5px #888; color:#261a0d; padding:1%;}
 a {color:#00F; text-decoration:none; font-weight:bold;}
+#navigation {display:inline-block; width:98%; background-color:#eee; box-shadow: 0px 5px 5px #888; color:#261a0d; padding:1%;}
 #home-button {float:left;}
 #user-links {float:right;}
-#index, .edit-form {margin-left:2%;}
-.question {background-color:#eee; margin-left:2%; padding:2%; width:92%; border-radius:32px; box-shadow: 5px 5px 5px #888;}
-.answer {background-color:#ddd; margin-left:4%; margin-top:2%; padding:2%; width:88%; border-radius:32px; box-shadow: 5px 5px 5px #888;}
-.comment {background-color:#ccc; margin-left:6%; margin-top:2%; padding:2%; width:86%; border-radius:32px; box-shadow: 5px 5px 5px #888;}
-/*.question {background-color:#eee; margin-left:2%; padding:2%; width:92%; border:thin solid #000; border-width:0 0 0 1px;}*/
-/*.answers {background-color:#ddd; margin-left:2%; padding:2%; border:thin solid #000; border-width:0 0 0 1px;}*/
-#comment-box {margin-left:2%;}
+#index, .edit-form {margin-left:2%; display:inline-block;}
+.question-container {padding:1%; display:flex;}
+.answer-container {margin-left:4%; padding:1%; display:flex;}
+.question-votes-area, .answer-votes-area {padding:1%; text-align:center; display:inline-block; border-width:0 1px 0 0; border-style:solid;}
+.question-votes, .answer-votes {font-weight:bold; line-height:32px; background-color:#000; color:#fff; border-radius:32px; width:32px; height:32px;}
+.question, .answer {display:inline-block; padding:1%; width:50%;}
+#question-comment-box {margin:0 2%; border-width:1px 0 0 0; border-style:dotted;}
+#answer-comment-box {margin:0 6%; border-width:1px 0 0 0; border-style:dotted;}
+.comment {font-size:small;}
 .question-title {font-weight:bold;}
-.pipe {color:#000;}
 .author-action {font-weight:normal;}
 .first-heading {margin-top:0;}
 .error {color:red; font-weight:bold;}

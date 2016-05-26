@@ -1,10 +1,29 @@
-<div class="answer">
-<%= answer.user.name %> answered, <%= answer.content %>
-<% if answer.user == current_user %>
-  &nbsp;<%= link_to "Edit Answer", [:edit, @question, answer] %>
-  |&nbsp;<%= link_to "Delete Answer", question_answer_path(@question, answer), data: {confirm: "Are you sure?", :method => :delete} %>
-<% end %>
+<div class="answer-container">
+  <div class="answer-votes-area">
+    <% if is_logged_in %>
+      <div class="answer-vote-button">
+        <% if has_voted_on(answer) %>
+          <%= render partial: 'votes/cancelvote', locals: {vote: get_vote(answer)} %>
+        <% else %>
+          <%= render partial: 'votes/upvote', locals: {voteable: answer} %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="answer-votes"><%= answer.votes.count %></div>
+  </div>
+
+  <div class="answer">
+    <div class="answer-content"><%= answer.user.name %> answered, <%= answer.content %>
+      <span class="author-action">
+        <% if answer.user == current_user %>
+          &nbsp;<%= link_to "Edit Answer", [:edit, @question, answer] %>
+          |&nbsp;<%= link_to "Delete Answer", question_answer_path(@question, answer), data: {confirm: "Are you sure?", :method => :delete} %>
+        <% end %>
+      </span>
+    </div>
+  </div>
 </div>
+
 <div id="answer-comment-box">
   <% if answer.comments.any? %>
     <h4><%= answer.comments.count %> comments:</h4>
@@ -14,6 +33,8 @@
   <% end %>
 </div>
 
-<% if is_logged_in %>
-  <%= render partial: 'comments/form', locals: {commentable: answer} %>
-<% end %>
+<div id="question-comment-form">
+  <% if is_logged_in %>
+    <%= render partial: 'comments/form', locals: {commentable: @question} %>
+  <% end %>
+</div>

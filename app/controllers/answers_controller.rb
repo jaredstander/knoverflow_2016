@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.create answer_params
+    @comment =  Comment.new
     @answer.user = current_user
     respond_to do |format|
       if @answer.save
@@ -10,7 +11,7 @@ class AnswersController < ApplicationController
         format.js
         format.json { render json: @answer, status: :created, location: @answer }
       else
-        format.html { render action: "new" }
+        # format.html { render action: "new" }
         format.json { render json: @answer.errors, status: :unprocessable_entity }
       end
     end
