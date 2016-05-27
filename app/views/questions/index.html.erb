@@ -18,7 +18,7 @@
           <span class="author-action">
           <% if question.user == current_user %>
             &nbsp;<%= link_to "Edit Question", edit_question_path(question.id), {method: :get, 'data-no-turbolink' => true} %>
-            |&nbsp;<%= link_to "Delete Question", question_path(question), {method: :delete, data: { confirm: 'Are you sure?', 'data-no-turbolink' => true }} %>
+            |&nbsp;<%= link_to "Delete Question", question_path(question), {method: :delete, data: { confirm: 'Are you sure?' } } %>
           <% end %>
           </span>
         </div>
