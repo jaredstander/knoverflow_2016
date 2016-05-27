@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   def index
-    @questions = Question.all
+    @questions = Question.order("vote_count DESC")
+    @vote = Vote.new
   end
 
   def new
@@ -21,11 +22,12 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
-    @answers = @question.answers.all
+    @answers = @question.answers.order("vote_count DESC")
     @answer = @question.answers.build
     @question_comments = @question.comments.all
     @answer_comments = @answer.comments.all
     @comment = Comment.new
+    @vote = Vote.new
   end
 
   def destroy

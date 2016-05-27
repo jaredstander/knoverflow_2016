@@ -1,7 +1,7 @@
 <div class="answer-container">
-  <div class="answer-votes-area">
+  <div class="answer-vote-area">
     <% if is_logged_in %>
-      <div class="answer-vote-button">
+      <div class="answer-vote-button-<%= answer.id %>">
         <% if has_voted_on(answer) %>
           <%= render partial: 'votes/cancelvote', locals: {vote: get_vote(answer)} %>
         <% else %>
@@ -9,7 +9,7 @@
         <% end %>
       </div>
     <% end %>
-    <div class="answer-votes"><%= answer.votes.count %></div>
+    <div class="answer-votes-<%= answer.id %>"><%= answer.votes.count %></div>
   </div>
 
   <div class="answer">
@@ -26,15 +26,18 @@
 
 <div id="answer-comment-box">
   <% if answer.comments.any? %>
-    <h4><%= answer.comments.count %> comments:</h4>
-    <% @question.comments.all.each do |comment| %>
+    <% answer.comments.all.each do |comment| %>
       <%= render partial: 'comments/comment', locals: {comment: comment, commentable: answer} %>
     <% end %>
   <% end %>
 </div>
 
-<div id="question-comment-form">
+<div id="answer-comment-form">
   <% if is_logged_in %>
-    <%= render partial: 'comments/form', locals: {commentable: @question} %>
+    <%= render partial: 'comments/form', locals: {commentable: answer} %>
   <% end %>
+</div>
+
+<div id="pulldown-answer-comments-form">
+  <span class="pulldown-left">▼</span>Add a Comment<span class="pulldown-right">▼</span>
 </div>

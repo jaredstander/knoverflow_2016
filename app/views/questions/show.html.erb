@@ -1,7 +1,7 @@
 <div class="question-container">
-  <div class="question-votes-area">
+  <div class="question-vote-area">
     <% if is_logged_in %>
-      <div class="question-vote-button">
+      <div class="question-vote-button-<%= @question.id %>">
         <% if has_voted_on(@question) %>
           <%= render partial: 'votes/cancelvote', locals: {vote: get_vote(@question)} %>
         <% else %>
@@ -9,7 +9,7 @@
         <% end %>
       </div>
     <% end %>
-    <div class="question-votes"><%= @question.votes.count %></div>
+    <div class="question-votes-<%= @question.id %>"><%= @question.votes.count %></div>
   </div>
   <div class="question">
     <div class="question-title"><%= @question.user.name %> asked, <%= @question.title %>
@@ -32,19 +32,24 @@
   <% end %>
 </div>
 
-<div id="question-comment-form">
-  <% if is_logged_in %>
-    <%= render partial: 'comments/form', locals: {commentable: @question} %>
+<% if is_logged_in %>
+  <div id="question-comment-form">
+      <%= render partial: 'comments/form', locals: {commentable: @question} %>
+  </div>
+  
+  <div id="pulldown-question-comments-form">
+    <span class="pulldown-left">▼</span>Add a Comment<span class="pulldown-right">▼</span>
+  </div>
+<% end %>
+
+<p>&nbsp;</p>
+
+<% unless @answers == nil %>
+  <% @answers.each do |answer| %>
+    <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
+    <p>&nbsp;</p>
   <% end %>
-</div>
-
-
-  <% unless @answers == nil %>
-    <% @answers.each do |answer| %>
-      <%= render partial: 'answers/answer', locals: {question: @question, answer: answer} %>
-    <% end %>
-  <% end %>
-
+<% end %>
 
 <% if is_logged_in && !has_answered(@question) %>
   <%= render partial: 'answers/form', locals: {question: @question} %>

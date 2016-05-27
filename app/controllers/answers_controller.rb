@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.create answer_params
     @comment =  Comment.new
     @answer.user = current_user
+    @vote = Vote.new
     respond_to do |format|
       if @answer.save
         format.html { redirect_to @answer, notice: 'Answer Posted.' }

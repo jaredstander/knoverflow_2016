@@ -14,3 +14,23 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function() {
+  $("#pulldown-question-comments-form").click(function(){
+    $("#question-comment-form").toggle("fast");
+    if($("#pulldown-question-comments-form").html().match("▼")){
+      $("#pulldown-question-comments-form").html('<span class="pulldown-left">▲</span>Close<span class="pulldown-right">▲</span>');
+    }else{
+      $("#pulldown-question-comments-form").html('<span class="pulldown-left">▼</span>Add a Comment<span class="pulldown-right">▼</span>');
+    }
+  });
+
+  $("#pulldown-answer-comments-form").click(function(){
+    $("#answer-comment-form").toggle("fast");
+    if($("#pulldown-answer-comments-form").html().match("▼")){
+      $("#pulldown-answer-comments-form").html('<span class="pulldown-left">▲</span>Close<span class="pulldown-right">▲</span>');
+    }else{
+      $("#pulldown-answer-comments-form").html('<span class="pulldown-left">▼</span>Add a Comment<span class="pulldown-right">▼</span>');
+    }
+  });
+});

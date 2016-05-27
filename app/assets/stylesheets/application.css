@@ -22,13 +22,23 @@ a {color:#00F; text-decoration:none; font-weight:bold;}
 #index, .edit-form {margin-left:2%; display:inline-block;}
 .question-container {padding:1%; display:flex;}
 .answer-container {margin-left:4%; padding:1%; display:flex;}
-.question-votes-area, .answer-votes-area {padding:1%; text-align:center; display:inline-block; border-width:0 1px 0 0; border-style:solid;}
-.question-votes, .answer-votes {font-weight:bold; line-height:32px; background-color:#000; color:#fff; border-radius:32px; width:32px; height:32px;}
-.question, .answer {display:inline-block; padding:1%; width:50%;}
+.question-vote-area, .answer-vote-area {padding:1%; text-align:center; display:inline-block; border-width:0 1px 0 0; border-style:solid;}
+div[class^="question-votes"] {font-weight:bold; line-height:32px; background-color:#000; color:#fff; border-radius:32px; width:32px; height:32px;}
+div[class^="answer-votes"] {font-weight:bold; line-height:32px; background-color:#000; color:#fff; border-radius:32px; width:32px; height:32px;}
+.question, .answer {display:inline-block; padding:1%;}
 #question-comment-box {margin:0 2%; border-width:1px 0 0 0; border-style:dotted;}
-#answer-comment-box {margin:0 6%; border-width:1px 0 0 0; border-style:dotted;}
+#answer-comment-box {margin:0 2% 0 6%; border-width:1px 0 0 0; border-style:dotted;}
 .comment {font-size:small;}
 .question-title {font-weight:bold;}
 .author-action {font-weight:normal;}
 .first-heading {margin-top:0;}
 .error {color:red; font-weight:bold;}
+#question-comment-form {padding:2%; display:none;}
+#answer-comment-form {padding:2% 6%; display:none;}
+#new-answer-form {margin-left:6%;}
+#pulldown-question-comments-form {font-size:small; text-align:center; background-color:#eee; margin:0 2%;}
+#pulldown-question-comments-form:hover {cursor:pointer;}
+#pulldown-answer-comments-form {font-size:small; text-align:center; background-color:#eee; margin:0 2% 0 6%;}
+#pulldown-answer-comments-form:hover {cursor:pointer;}
+.pulldown-left {float:left; margin-left:5%;}
+.pulldown-right {float:right; margin-right:5%;}

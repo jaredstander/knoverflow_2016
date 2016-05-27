@@ -1,4 +1,4 @@
-<div id="signup-form">
+<div class="edit-form">
   <h1>Sign Up!</h1>
   <div class="error"><%= flash[:error] if flash[:error] %></div>
   <br /><br />
@@ -13,11 +13,11 @@
     <br /><br />
     <%= f.label :password %>
     <br />
-    <%= f.text_field :password %>
+    <%= f.password_field :password %>
     <br /><br />
     <%= f.label :password_confirmation %>
     <br />
-    <%= f.text_field :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
     <br /><br />
     <%= f.submit "Sign Up" %>
   <% end %>

@@ -1,1 +1,1 @@
-<%= link_to "▲", question_votes_path(voteable), data: {method: :post, remote: true} %>
+<%= link_to "▲", [voteable, @vote], data: {method: :post, remote: true} %>

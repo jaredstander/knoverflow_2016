@@ -1,3 +1,3 @@
-var voteNumber = parseInt($(".question-votes").html());
-$(".question-votes").html(voteNumber + 1);
-$(".question-vote-button").html('<%= escape_javascript render(partial: "votes/cancelvote", :locals => { vote: @vote }) %>');
+var voteNumber = parseInt($(".<%= @vote.voteable_type.downcase %>-votes-<%= @vote.voteable_id %>").html());
+$(".<%= @vote.voteable_type.downcase %>-votes-<%= @vote.voteable_id %>").html(voteNumber + 1);
+$(".<%= @vote.voteable_type.downcase %>-vote-button-<%= @vote.voteable_id %>").html('<%= escape_javascript render(partial: "votes/cancelvote", :locals => { vote: @vote }) %>');

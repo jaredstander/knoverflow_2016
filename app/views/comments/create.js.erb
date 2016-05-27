@@ -1,1 +1,2 @@
 $("#<%= escape_javascript(@comment.commentable_type.downcase) %>-comment-box").append("<%= escape_javascript(render @comment) %>");
+$("#pulldown-<%= escape_javascript(@comment.commentable_type.downcase) %>-comments-form").click();

@@ -1,9 +1,5 @@
-<div id="new-comment-form">
+<div class="new-comment-form">
   <%= form_for [commentable, @comment], remote: true do |f| %>
-    <%= f.label :content %>
-    <br />
-    <%= f.text_field :content, placeholder: "Your Comment" %>
-    <br /><br />
-    <%= f.submit 'Submit Comment' %>
+    <%= f.label :content %>&nbsp;<%= f.text_field :content, placeholder: "Your Comment" %>&nbsp;<%= f.submit 'Submit Comment' %>
   <% end %>
 </div>
