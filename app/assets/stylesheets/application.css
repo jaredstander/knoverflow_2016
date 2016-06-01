@@ -42,3 +42,4 @@ div[class^="answer-votes"] {font-weight:bold; line-height:32px; background-color
 #pulldown-answer-comments-form:hover {cursor:pointer;}
 .pulldown-left {float:left; margin-left:5%;}
 .pulldown-right {float:right; margin-right:5%;}
+#back {font-weight:bold; font-size:large; margin:1%;}
