@@ -32,12 +32,12 @@
   <% end %>
 </div>
 
-<div id="answer-comment-form">
-  <% if is_logged_in %>
+<% if is_logged_in %>
+  <div id="answer-comment-form">
     <%= render partial: 'comments/form', locals: {commentable: answer} %>
-  <% end %>
-</div>
+  </div>
 
-<div id="pulldown-answer-comments-form">
-  <span class="pulldown-left">▼</span>Add a Comment<span class="pulldown-right">▼</span>
-</div>
+  <div id="pulldown-answer-comments-form">
+    <span class="pulldown-left">▼</span>Add a Comment<span class="pulldown-right">▼</span>
+  </div>
+<% end %>
