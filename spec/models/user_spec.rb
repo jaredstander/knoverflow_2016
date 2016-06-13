@@ -2,18 +2,20 @@ require 'rails_helper'
  
 describe User do
   before :each do
-    @user = User.new
-    @user.name = "Artorias"
-    @user.email = "artorias@abysswalker.net"
+    @user = build(:user)
   end
 
   describe "#new" do
-    it "takes 2 parameters and returns a user object" do
-      expect(@user).to be_an_instance_of User
+    it "takes 4 parameters and returns a user obejct" do
+      expect(@user).to be_valid
     end
   end
 
   describe "#name" do
+    it "requires a name" do
+      expect(@name).to validates_presence_of(:name)
+    end
+
     it "returns the correct name" do
       expect(@user.name).to eql "Artorias"
     end
@@ -25,11 +27,4 @@ describe User do
     end
   end
 
-  describe "#save" do
-    it "saves the user" do
-      expect { 
-        post :create, :user => {:user => :attributes }
-      }.to change { User.count }
-    end
-  end
 end

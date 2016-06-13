@@ -7,8 +7,6 @@
         1,
         1,
         4,
-        4,
-        4,
         null,
         null,
         1,
@@ -22,8 +20,6 @@
         1,
         null,
         null,
-        null,
-        1,
         1,
         1,
         null,
@@ -32,8 +28,7 @@
         1,
         1,
         1,
-        1,
-        1,
+        null,
         null,
         null,
         null
@@ -47,7 +42,6 @@
         1,
         1,
         null,
-        1,
         null,
         null,
         null,
@@ -260,6 +254,16 @@
         null,
         null
       ],
+      "/home/jared/knoverflow_2016/spec/factories/user_factory.rb": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
       "/home/jared/knoverflow_2016/config/routes.rb": [
         1,
         null,
@@ -379,6 +383,6 @@
         null
       ]
     },
-    "timestamp": 1465582264
+    "timestamp": 1465853209
   }
 }
