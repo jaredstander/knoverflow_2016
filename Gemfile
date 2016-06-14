@@ -45,12 +45,6 @@ group :development, :test do
   gem 'rspec-rails'
   # capybara for integration testing
   gem 'capybara'
-
-  # FACTORIES
-  gem 'factory_girl_rails'
-
-  # I SHOULDA installed this gem
-  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :development do
@@ -61,3 +55,10 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  # FACTORIES
+  gem 'factory_girl_rails'
+
+  # I SHOULDA installed this gem
+  gem 'shoulda-matchers', '~> 3.1'
+end
